@@ -1,36 +1,117 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    <title>Currency</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+<title>Currency</title>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-            document.querySelector('form').onsubmit = function() {
-                fetch("https://api.exchangeratesapi.io/latest?base=USD")
+        document.querySelector('form').onsubmit = function () {
+            const currency1 = document.querySelector('#currency1').value.toUpperCase();
+            const amount = document.querySelector('#amount').value;
+            fetch("https://api.exchangeratesapi.io/latest?base=" + currency1)
                 .then(response => response.json())
                 .then(data => {
-                    const currency = document.querySelector('#currency').value.toUpperCase();
-                    const rate = data.rates[currency];
-                    if (rate !== undefined) {
-                        const result = `1 USD is equal to ${rate.toFixed(3)} ${currency}`;
+                    const currency2 = document.querySelector('#currency2').value.toUpperCase();
+                    const rate = data.rates[currency2];
+                    const tot = amount * rate;
+                    if (amount >=0) {
+                        const result = `${amount} ${currency1} is equal to ${tot.toFixed(3)} ${currency2}`;
                         document.querySelector('#result').innerHTML = result;
                     } else {
-                        document.querySelector('#result').innerHTML = 'Invalid currency.';
+                        const result = `1 ${currency1} is equal to ${rate.toFixed(3)} ${currency2}`;
+                        document.querySelector('#result').innerHTML = result;
                     }
                 })
                 .catch(error => {
                     console.log('Error:', error);
                 });
-                return false;
-            }
-        });
-    </script>
-    <body>
-        <form>
-            <input id="currency" placeholder="Currency">
-            <input type="submit" value="Convert">
-        </form>
-        <div id="result">
-        </div>
-    </body>
+            return false;
+        }
+    });
+</script>
+
+<body>
+    <h1> Currency Converter </h1>
+    <form>
+        Amount of money to convert:
+        <input type="number" id="amount" placeholder="Amount" value='1'/> <br />
+        From:
+        <select name="currency1" id="currency1">
+            <option value="CAD">CAD</option>
+            <option value="HKD">HKD</option>
+            <option value="ISK">ISK</option>
+            <option value="PHP">PHP</option>
+            <option value="DKK">DKK</option>
+            <option value="HUF">HUF</option>
+            <option value="CZK">CZK</option>
+            <option value="GBP">GBP</option>
+            <option value="RON">RON</option>
+            <option value="SEK">SEK</option>
+            <option value="IDR">IDR</option>
+            <option value="BRL">BRL</option>
+            <option value="INR">INR</option>
+            <option value="RUB">RUB</option>
+            <option value="HRK">HRK</option>
+            <option value="JPY">JPY</option>
+            <option value="THB">THB</option>
+            <option value="CHF">CHF</option>
+            <option value="EUR">EUR</option>
+            <option value="MYR">MYR</option>
+            <option value="BGN">BGN</option>
+            <option value="TRY">TRY</option>
+            <option value="CNY">CNY</option>
+            <option value="NOK">NOK</option>
+            <option value="NZD">NZD</option>
+            <option value="ZAR">ZAR</option>
+            <option value="USD">USD</option>
+            <option value="MXN">MXN</option>
+            <option value="SGD">SGD</option>
+            <option value="AUD">AUD</option>
+            <option value="ILS">ILS</option>
+            <option value="KRW">KRW</option>
+            <option value="PLN">PLN</option>
+        </select>
+
+        To:
+        <select name="currency2" id="currency2">
+            <option value="CAD">CAD</option>
+            <option value="HKD">HKD</option>
+            <option value="ISK">ISK</option>
+            <option value="PHP">PHP</option>
+            <option value="DKK">DKK</option>
+            <option value="HUF">HUF</option>
+            <option value="CZK">CZK</option>
+            <option value="GBP">GBP</option>
+            <option value="RON">RON</option>
+            <option value="SEK">SEK</option>
+            <option value="IDR">IDR</option>
+            <option value="BRL">BRL</option>
+            <option value="INR">INR</option>
+            <option value="RUB">RUB</option>
+            <option value="HRK">HRK</option>
+            <option value="JPY">JPY</option>
+            <option value="THB">THB</option>
+            <option value="CHF">CHF</option>
+            <option value="EUR">EUR</option>
+            <option value="MYR">MYR</option>
+            <option value="BGN">BGN</option>
+            <option value="TRY">TRY</option>
+            <option value="CNY">CNY</option>
+            <option value="NOK">NOK</option>
+            <option value="NZD">NZD</option>
+            <option value="ZAR">ZAR</option>
+            <option value="USD">USD</option>
+            <option value="MXN">MXN</option>
+            <option value="SGD">SGD</option>
+            <option value="AUD">AUD</option>
+            <option value="ILS">ILS</option>
+            <option value="KRW">KRW</option>
+            <option value="PLN">PLN</option>
+        </select>
+
+        <input type="submit" value="Convert">
+    </form>
+    <div id="result">
+    </div>
+</body>
+
 </html>
